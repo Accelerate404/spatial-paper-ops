@@ -2,6 +2,12 @@
 
 **Engineering discipline for manuscripts built on multi-objective spatial optimization.**
 
+[![tests](https://github.com/Accelerate404/spatial-paper-ops/actions/workflows/ci.yml/badge.svg)](https://github.com/Accelerate404/spatial-paper-ops/actions/workflows/ci.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://www.python.org/downloads/)
+[![dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen.svg)](#requirements)
+[![platforms: linux / macOS / windows](https://img.shields.io/badge/platforms-linux%20%7C%20macOS%20%7C%20windows-lightgrey.svg)](#requirements)
+
 A skill for AI agents (Claude Code, WorkBuddy, and compatible runtimes) that turns the hard-won lessons of a real geography paper into executable criteria — so that "the number in the abstract no longer matches the figure" stops happening.
 
 ---
