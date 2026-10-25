@@ -1,0 +1,8 @@
+# Normalise line endings to LF in the repository, on every platform.
+# Without this, core.autocrlf makes checkouts platform-dependent and the
+# text gate's line-ending check produces different results on Windows and Linux.
+* text=auto eol=lf
+
+*.png binary
+*.pdf binary
+*.jpg binary

@@ -1,0 +1,33 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: ${{ matrix.os }} / py${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Self-tests (exit-code semantics and criteria)
+        run: python tests/test_gates.py
+
+      - name: End-to-end demo on synthetic data
+        run: python tests/run_demo.py
+
+      - name: Verify the example config parses
+        run: python -c "import tomllib,sys; tomllib.load(open(sys.argv[1],'rb'))" assets/gate.example.toml

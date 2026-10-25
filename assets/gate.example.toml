@@ -1,0 +1,62 @@
+# gate.toml — declarative gate configuration
+#
+# The engine lives in assets/gate.py; the anchors live here.
+# Switching projects means editing this file only, never the scripts.
+# One failing group does not stop the others from running.
+#
+# Usage:
+#   python <skill>/assets/gate.py --config gate.toml
+#   python <skill>/assets/gate.py --config gate.toml --only figures
+#   python <skill>/assets/gate.py --config gate.toml --list
+#
+# Note: unknown keys are a hard error (exit code 2). A misspelled key would
+# otherwise disable one check without anyone noticing.
+
+# ---- Global defaults, used by any block that does not override them ----
+[defaults.figures]
+fig_dir     = "output/figures"   # body figure directory (this level only)
+expect      = 7                  # body figure count; must match exactly
+width       = 2244               # expected pixel width: 190 mm @ 300 dpi
+width_tol   = 2                  # width tolerance in px
+dpi         = 300                # minimum dpi
+require_pdf = true               # require a vector PDF next to each PNG
+# code_dir  = "code"             # enables duplicate-producer detection
+
+[defaults.text]
+md_eol   = "lf"                  # line-ending convention for markdown
+py_eol   = "lf"                  # use "crlf" if your repository enforces that
+strict   = false                 # true: inline bold counts as a hard failure
+
+# ---- Cross-manuscript reconciliation: side of record first, derived second ----
+[[recon]]
+name   = "manuscript of record vs translation"
+left   = "manuscript_zh.md"
+right  = "manuscript_en.md"
+# exceptions = ["1449.8=14.498", "1798.1=17.981"]   # registered unit conversions
+
+# ---- Figure gate ----
+[[figures]]
+name     = "body figures"
+code_dir = "code"
+
+# ---- Text gate: can be split into several blocks with different rules ----
+[[text]]
+name   = "manuscript of record"
+paths  = ["manuscript_zh.md"]
+strict = true
+
+# [[text]]
+# name      = "supplementary"
+# paths     = ["supplementary"]
+# recursive = true
+# strict    = false
+
+# ---- Waivers for known issues ----
+# Both reason and until are required; missing either is a configuration error.
+# On expiry the group is restored to failure automatically.
+# A waiver is not silence: raw output is still printed in full, and you are asked
+# to confirm the failing item is still the one registered here.
+# [[waiver]]
+# target = "figures"
+# reason = "preview handle left 0-byte placeholders; cleanup pending"
+# until  = "2026-11-01"
